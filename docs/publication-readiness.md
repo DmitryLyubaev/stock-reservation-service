@@ -28,8 +28,11 @@ submissions with ten creations/ten expected rejections, actual rollback/races/ou
 SIGKILL replay and a genuine five-minute expiry run. See the dated local report for source,
 clock, image, sample and limitations. A later clean main canonical run also passed 29+11.
 
-Fresh publication-checkout verification and final publication-tree scanning are pending.
-This line will be replaced with their actual outcomes before final publication approval.
+A fresh native-Linux clone of public snapshot `03d06bbe916b618d3a7682ea8560e1a82d340c3a` passed canonical verification: **29 Java and 11 Python checks**, zero failures/errors/skips and zero remaining owned Testcontainers. Maven reported 52.390 seconds. The clone began with an empty per-checkout Maven cache; existing host Docker image/build caches were available. No private local credentials were copied. This is a local Linux run, not a GitHub-hosted run.
+
+The root-history Gitleaks 8.30.1 scan and actionlint 1.7.12 passed. The final approval proposal records the final history scan, tree/bundle identities and publication-only review after this documentation update. The full A1-A8 packaged study was not rerun during publication preparation because implementation inputs are unchanged.
+
+Implementation-input digest: `375cf38667b44f4cfe65a42385220cb3878d997fea068a4879da89c520a9b9c2` (61 files, stored Git modes and SHA-256 of each blob). The digest is SHA-256 of UTF-8 compact sorted JSON mapping paths to `mode` and `sha256`. Inputs comprise `src`, `scripts`, `tests`, `config`, `.mvn`, and the top-level Maven wrappers/POM, Dockerfiles, Compose, Docker/Git attributes and ignore files, and OpenAPI contract.
 
 ## Proposed hosted execution
 
