@@ -48,5 +48,7 @@ The approved public repository is `DmitryLyubaev/stock-reservation-service`, wit
 existing license-file state unchanged (no added license). Creation, protections, initial
 push and hosted verification completed under explicit approval; see the publication report.
 
-The existing deferred unsupported-method status Minor remains. Publication does not add
+The initially deferred unsupported-method status Minor was subsequently resolved in
+the [functional follow-up](http-method-followup-2026-10-31.md). The input digest and
+29-test observations above describe the original publication snapshot. Publication does not add
 commercial Java tenure, real orders, customer adoption, production scale or availability.

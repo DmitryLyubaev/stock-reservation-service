@@ -40,5 +40,8 @@ The local suite passed 29 Java and 11 Python checks with zero skips. These inclu
 and harness checks as well as actual PostgreSQL/HTTP tests; they are not forty independent
 business scenarios. The twenty-request sample is not a throughput benchmark.
 
-One deferred Minor remains: unsupported HTTP methods return 500 rather than 405/Allow,
-without changing stock. See the implementation notes for the reviewed finding and limits.
+The initially deferred unsupported-method Minor was resolved on 31 October: callers
+now receive 405 and Allow for routing method rejections, without a stock/key write. Its added regression brings the
+current suite to 30 Java and 11 Python checks. See the
+[follow-up](http-method-followup-2026-10-31.md) for source and verification; the original
+29-test measurements above retain their historical source.

@@ -16,8 +16,11 @@ and retain the original response for each request key.
 
 Publication history starts from a reviewed snapshot. Historical source IDs in the dated
 reports refer to preserved private verification history; the publication provenance records
-how the implementation bytes match those measurements. [Hosted verification](docs/publication-report-2026-10-31.md) passed A1-A8, including
-29 Java and 11 Python checks, actual restart replay and genuine five-minute expiry.
+how the implementation bytes match those measurements. The [dated publication run](docs/publication-report-2026-10-31.md) passed A1-A8 with
+29 Java and 11 Python checks, actual restart replay and genuine expiry. The
+[HTTP method follow-up](docs/http-method-followup-2026-10-31.md) resolves the original
+Minor and brings the current suite to 30 Java and 11 Python checks; the CI badge shows
+the current hosted result.
 
 ## Run locally
 
@@ -80,6 +83,9 @@ Availability is `on_hand - held`. ACTIVE holds, including overdue holds awaiting
 operation, count toward held stock. Confirmation reduces both on-hand and held; cancellation
 or expiry reduces held. All changes and the stored request response commit atomically.
 Technical failure rolls them back; lock/statement contention returns retryable `503 BUSY`.
+Method rejections from routing return `405 METHOD_NOT_ALLOWED` with the route's
+`Allow` header. Existing POST boundary validation can reject malformed requests first.
+Neither rejection claims a request key or changes stock.
 
 ## State and transaction model
 

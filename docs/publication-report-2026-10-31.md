@@ -44,12 +44,15 @@ tied to its original measured source; those results are not relabelled as this h
 All 61 implementation inputs and stored modes match the reviewed local source.
 Implementation-input digest:
 `375cf38667b44f4cfe65a42385220cb3878d997fea068a4879da89c520a9b9c2`.
-Later publication/status commits change documentation only; their exact-ref workflow
-results are available from the repository's Actions history and README badge.
+The original reporting commit 5802440 changed documentation only; its exact-ref
+workflow passed. The later [HTTP method follow-up](http-method-followup-2026-10-31.md)
+changes the method-error handler and adds a regression. Its source and measurements
+are separate from this original publication record.
 
 One independently synthetic service/database, one product per hold, trusted loopback
 callers, explicit expiry and dataset-lifetime request retention remain the boundary.
 The one twenty-request sample does not establish production throughput, availability,
 distributed exactly-once delivery, customer adoption or commercial Java tenure.
-The previously deferred unsupported-method 500 versus 405/Allow Minor remains.
+The unsupported-method Minor was deferred at this publication measurement and was
+subsequently resolved in the linked follow-up.
 No new application features, provider evaluations, paid resources or licensing terms.

@@ -6,6 +6,9 @@ info:
     Local single-product reservation demonstration. Local callers are trusted.
     Every mutation needs one globally scoped request key. Equal validated requests
     replay the original status/body; conflicting key reuse is rejected. Expiry is explicit.
+    Method rejections from routing return 405 METHOD_NOT_ALLOWED with Allow.
+    Existing POST boundary validation can reject malformed requests first.
+    These rejections occur before any request key or stock mutation.
 servers:
   - url: http://127.0.0.1:8220
 security: []

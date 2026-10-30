@@ -100,7 +100,7 @@ zero skips/failures/errors, real expiry after 301.347639 seconds, exact restart 
 zero owned containers and one retained volume. Later closeout commits change
 documentation/status only.
 
-Deferred Minor: unsupported HTTP methods return `500 INTERNAL_ERROR` rather than 405
+Historical deferred Minor (now resolved in the [follow-up](http-method-followup-2026-10-31.md)): unsupported HTTP methods returned `500 INTERNAL_ERROR` rather than 405
 with Allow. Clients receive the wrong error classification; stock correctness is unaffected.
 This was re-graded and retained as Minor within the bounded demonstration, and not included
 in the one Important-finding correction pass.
@@ -129,3 +129,10 @@ Minor is unchanged. No remote, push, hosted execution, cloud action or runtime r
 integration phases. Approved public publication and actual hosted A1-A8 verification
 are now recorded in the [dated report](publication-report-2026-10-31.md). Original private
 ancestry was excluded; implementation inputs and the deferred Minor are unchanged.
+
+## HTTP method polish, 31 October 2026
+
+Dmitry requested the remaining polish. A specific method-not-supported handler now
+returns 405/METHOD_NOT_ALLOWED with Allow; a real HTTP regression observed RED then
+GREEN and clean canonical verification passed 30 Java+11 Python. The original
+unsupported-method Minor is closed. See the [follow-up](http-method-followup-2026-10-31.md).
