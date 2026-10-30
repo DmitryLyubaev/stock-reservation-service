@@ -1,0 +1,36 @@
+name: p20-stock-reservation
+services:
+  db:
+    image: postgres:17.11-bookworm@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5
+    labels:
+      io.project20.demo: "true"
+    environment:
+      POSTGRES_USER: p20_demo
+      POSTGRES_DB: project20
+      POSTGRES_PASSWORD: ${P20_DB_PASSWORD:?Run scripts/demo.sh start first}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "p20_demo", "-d", "project20"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    restart: "no"
+  api:
+    image: p20-stock-api:local
+    pull_policy: never
+    labels:
+      io.project20.demo: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
+      P20_DATABASE_URL: jdbc:postgresql://db:5432/project20
+      P20_DATABASE_USER: p20_demo
+      P20_DATABASE_PASSWORD: ${P20_DB_PASSWORD:?Run scripts/demo.sh start first}
+    ports:
+      - "127.0.0.1:8220:8220"
+    restart: "no"
+volumes:
+  pgdata:

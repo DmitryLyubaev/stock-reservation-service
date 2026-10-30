@@ -1,0 +1,31 @@
+name: Offline verification
+on:
+  push:
+    branches: [main, 'codex/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Canonical tests and packaged demonstration
+        run: bash scripts/study.sh .local/study
+      - name: Owned cleanup
+        if: always()
+        run: |
+          if [ -f scripts/cleanup.sh ]; then bash scripts/cleanup.sh; fi
+      - name: Safe aggregate evidence
+        if: always()
+        shell: bash
+        run: |
+          if [ -f .local/study/report.md ]; then
+            cat .local/study/report.md | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            printf 'Study report was not produced; inspect the failed verification step.\n' | tee -a "$GITHUB_STEP_SUMMARY"
+          fi

@@ -1,0 +1,10 @@
+**
+!Dockerfile
+!Dockerfile.tooling
+!pom.xml
+!mvnw
+!.mvn/
+!.mvn/**
+!src/
+!src/main/
+!src/main/**

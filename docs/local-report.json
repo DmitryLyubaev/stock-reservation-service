@@ -1,0 +1,64 @@
+{
+  "status": "pass",
+  "observed_at": "2026-10-30T11:31:16.625583+00:00",
+  "source_sha": "0b827f2d8faf39d03ebed062abbd204438e59239",
+  "source_tree": "a3f4ee1a6a3f750d827aa5de8aa4a7c0a9739f4b",
+  "source_dirty": false,
+  "acceptance": {
+    "A1": "pass",
+    "A2": "pass",
+    "A3": "pass",
+    "A4": "pass",
+    "A5": "pass",
+    "A6": "pass",
+    "A7": "pass",
+    "A8": "pass"
+  },
+  "java_tests": 29,
+  "python_tests": 11,
+  "skipped": 0,
+  "jar_sha256": "2b46dda163527474bdc339f66aa56064f4ca9ca96978893b54f37aae0b95c51d",
+  "environment": {
+    "os": "Linux",
+    "architecture": "x86_64",
+    "python": "3.14.4",
+    "docker": "29.7.2",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS"
+  },
+  "image_id": "sha256:d4482c63b5b60fff8ba9c1bb011dbd75f85d3cc3056b339600877c651263c935",
+  "scarce_stock": {
+    "submissions": 20,
+    "created": 10,
+    "insufficient_stock": 10,
+    "peak_client_overlap": 20,
+    "observed_lock_waiters": 8
+  },
+  "rollback": {
+    "post_flush_failure": 500,
+    "retry": 201,
+    "partial_rows": 0
+  },
+  "restart": {
+    "exit_code": 137,
+    "exact_replay": true
+  },
+  "real_clock": {
+    "created_at": "2026-10-30T11:26:06.905953Z",
+    "expires_at": "2026-10-30T11:31:06.905953Z",
+    "decided_at": "2026-10-30T11:31:08.253592Z",
+    "elapsed_database_seconds": 301.347639
+  },
+  "testcontainers_remaining": 0,
+  "cleanup": {
+    "remaining_owned_containers": 0,
+    "retained_volumes": [
+      "p20-stock-reservation_pgdata"
+    ]
+  },
+  "limitations": [
+    "Synthetic local demonstration; one host and one 20-request scarce-stock sample.",
+    "Accelerated race tests use injected time; A8 separately uses the actual database clock.",
+    "Expiry is explicit; overdue holds remain counted until processed.",
+    "No hosted CI, remote deployment, production scale, SLA or commercial Java tenure is established by this local run."
+  ]
+}

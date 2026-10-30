@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Synthetic Stock Reservation Service
+  version: 0.1.0
+  description: >-
+    Local single-product reservation demonstration. Local callers are trusted.
+    Every mutation needs one globally scoped request key. Equal validated requests
+    replay the original status/body; conflicting key reuse is rejected. Expiry is explicit.
+servers:
+  - url: http://127.0.0.1:8220
+security: []
+paths:
+  /api/inventory/{productCode}:
+    get:
+      operationId: readInventory
+      parameters:
+        - {name: productCode, in: path, required: true, schema: {type: string, maxLength: 32}, example: DEMO-RED}
+      responses:
+        '200':
+          description: Current inventory observation
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Inventory'}
+        '404': {$ref: '#/components/responses/Problem'}
+        '500': {$ref: '#/components/responses/Problem'}
+  /api/reservations:
+    post:
+      operationId: reserveStock
+      description: Holds available stock for exactly five minutes; creates a server UUID.
+      parameters:
+        - {$ref: '#/components/parameters/RequestKey'}
+      requestBody:
+        required: true
+        description: At most 2048 UTF-8 bytes. Unknown members and scalar coercion are rejected.
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [order_reference, product_code, quantity]
+              properties:
+                order_reference: {type: string, pattern: '^[A-Za-z0-9._:-]{1,64}$', example: ORDER-001}
+                product_code: {type: string, pattern: '^[A-Za-z0-9._:-]{1,32}$', example: DEMO-RED}
+                quantity:
+                  type: integer
+                  minimum: 1
+                  maximum: 1000000
+                  description: A JSON integer literal; strings, booleans and float literals are rejected.
+                  example: 2
+      responses:
+        '201': {$ref: '#/components/responses/Reservation'}
+        '400': {$ref: '#/components/responses/Problem'}
+        '404': {$ref: '#/components/responses/Problem'}
+        '409': {$ref: '#/components/responses/Problem'}
+        '413': {$ref: '#/components/responses/Problem'}
+        '415': {$ref: '#/components/responses/Problem'}
+        '500': {$ref: '#/components/responses/Problem'}
+        '503': {$ref: '#/components/responses/Problem'}
+  /api/reservations/{id}:
+    get:
+      operationId: readReservation
+      description: Current state with as_of and overdue; reads never release held stock.
+      parameters:
+        - {$ref: '#/components/parameters/ReservationId'}
+      responses:
+        '200': {$ref: '#/components/responses/Reservation'}
+        '400': {$ref: '#/components/responses/Problem'}
+        '404': {$ref: '#/components/responses/Problem'}
+        '500': {$ref: '#/components/responses/Problem'}
+  /api/reservations/{id}/confirm:
+    post:
+      operationId: confirmReservation
+      description: >-
+        Before expiry, consumes held stock once. A due ACTIVE hold becomes EXPIRED
+        and commits its release while returning 409 RESERVATION_EXPIRED.
+      parameters:
+        - {$ref: '#/components/parameters/ReservationId'}
+        - {$ref: '#/components/parameters/RequestKey'}
+      requestBody: {$ref: '#/components/requestBodies/Empty'}
+      responses:
+        '200': {$ref: '#/components/responses/Reservation'}
+        '400': {$ref: '#/components/responses/Problem'}
+        '404': {$ref: '#/components/responses/Problem'}
+        '409': {$ref: '#/components/responses/Problem'}
+        '413': {$ref: '#/components/responses/Problem'}
+        '415': {$ref: '#/components/responses/Problem'}
+        '500': {$ref: '#/components/responses/Problem'}
+        '503': {$ref: '#/components/responses/Problem'}
+  /api/reservations/{id}/cancel:
+    post:
+      operationId: cancelReservation
+      description: Releases an ACTIVE hold before expiry. Due cancellation commits EXPIRED and returns 409.
+      parameters:
+        - {$ref: '#/components/parameters/ReservationId'}
+        - {$ref: '#/components/parameters/RequestKey'}
+      requestBody: {$ref: '#/components/requestBodies/Empty'}
+      responses:
+        '200': {$ref: '#/components/responses/Reservation'}
+        '400': {$ref: '#/components/responses/Problem'}
+        '404': {$ref: '#/components/responses/Problem'}
+        '409': {$ref: '#/components/responses/Problem'}
+        '413': {$ref: '#/components/responses/Problem'}
+        '415': {$ref: '#/components/responses/Problem'}
+        '500': {$ref: '#/components/responses/Problem'}
+        '503': {$ref: '#/components/responses/Problem'}
+  /api/reservations/{id}/expire:
+    post:
+      operationId: expireReservation
+      description: >-
+        At or after the deadline, releases held stock and sets EXPIRED. Earlier requests
+        return 409 NOT_DUE. Repeating the achieved terminal action with a fresh key is a no-op 200.
+      parameters:
+        - {$ref: '#/components/parameters/ReservationId'}
+        - {$ref: '#/components/parameters/RequestKey'}
+      requestBody: {$ref: '#/components/requestBodies/Empty'}
+      responses:
+        '200': {$ref: '#/components/responses/Reservation'}
+        '400': {$ref: '#/components/responses/Problem'}
+        '404': {$ref: '#/components/responses/Problem'}
+        '409': {$ref: '#/components/responses/Problem'}
+        '413': {$ref: '#/components/responses/Problem'}
+        '415': {$ref: '#/components/responses/Problem'}
+        '500': {$ref: '#/components/responses/Problem'}
+        '503': {$ref: '#/components/responses/Problem'}
+components:
+  parameters:
+    RequestKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Exactly one header; retained for the dataset lifetime. Business rejections are retained; validation/technical failures are not completed keys.
+      schema: {type: string, pattern: '^[A-Za-z0-9._:-]{1,128}$'}
+    ReservationId:
+      name: id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  requestBodies:
+    Empty:
+      required: true
+      content:
+        application/json:
+          schema: {type: object, additionalProperties: false, maxProperties: 0}
+          example: {}
+  responses:
+    Reservation:
+      description: Reservation snapshot; duplicate requests return the original snapshot, GET returns current state.
+      headers:
+        Idempotency-Replayed:
+          description: Present as true when replaying the original mutation response.
+          schema: {type: boolean}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Reservation'}
+    Problem:
+      description: >-
+        Safe problem JSON. Stable codes include INVALID_REQUEST, PRODUCT_NOT_FOUND,
+        RESERVATION_NOT_FOUND, INSUFFICIENT_STOCK, IDEMPOTENCY_CONFLICT, INVALID_STATE,
+        NOT_DUE, RESERVATION_EXPIRED, BODY_TOO_LARGE, UNSUPPORTED_MEDIA_TYPE,
+        BUSY and INTERNAL_ERROR. No stack trace, SQL or credentials are returned.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+  schemas:
+    Inventory:
+      type: object
+      required: [product_code, on_hand, held, available, as_of]
+      properties:
+        product_code: {type: string}
+        on_hand: {type: integer, minimum: 0}
+        held: {type: integer, minimum: 0}
+        available: {type: integer, minimum: 0}
+        as_of: {type: string, format: date-time}
+    Reservation:
+      type: object
+      required: [id, order_reference, product_code, quantity, state, created_at, expires_at, decided_at]
+      properties:
+        id: {type: string, format: uuid}
+        order_reference: {type: string}
+        product_code: {type: string}
+        quantity: {type: integer}
+        state: {type: string, enum: [ACTIVE, CONFIRMED, CANCELLED, EXPIRED]}
+        created_at: {type: string, format: date-time}
+        expires_at: {type: string, format: date-time}
+        decided_at: {type: string, format: date-time, nullable: true}
+        as_of: {type: string, format: date-time}
+        overdue: {type: boolean}
+    Problem:
+      type: object
+      required: [type, title, status, code, detail, instance]
+      properties:
+        type: {type: string}
+        title: {type: string}
+        status: {type: integer}
+        code: {type: string}
+        detail: {type: string}
+        instance: {type: string}

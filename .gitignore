@@ -1,0 +1,9 @@
+.local/
+.superpowers/
+.worktrees/
+target/
+.env
+.env.*
+!.env.example
+*.log
+__pycache__/
