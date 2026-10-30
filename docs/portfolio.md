@@ -8,10 +8,11 @@ existing commercial experience. It does not establish years of commercial Java d
 Built a synthetic Java 25/Spring Boot stock-reservation API with PostgreSQL transactions,
 JPA/Hibernate, Flyway and durable idempotency. Verified contention, post-flush rollback,
 expiry races and restart replay through actual HTTP/PostgreSQL tests; packaged with Docker
-and a GitHub Actions workflow.
+and a GitHub Actions workflow, verified locally and in GitHub Actions.
 
-Keep "GitHub Actions workflow" as a definition-only claim until an actual hosted run is
-linked. After a successful run, "verified locally and in GitHub Actions" is supported.
+[Actual hosted verification](https://github.com/DmitryLyubaev/stock-reservation-service/actions/runs/41133721919) passed A1-A8 with 29 Java and 11 Python checks,
+zero skips. See the [dated hosted report](publication-report-2026-10-31.md) for source,
+clock, sample and limitations; local and hosted observations are separate samples.
 
 ## Concrete evidence to discuss
 

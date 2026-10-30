@@ -1,7 +1,9 @@
 # Publication provenance and readiness
 
-31 October 2026, Australia/Brisbane. Local publication candidate only; no public repository,
-push or hosted workflow execution is established by this document.
+31 October 2026, Australia/Brisbane. Preparation record followed by approved publication.
+The public repository and actual hosted result are now recorded in the
+[publication report](publication-report-2026-10-31.md). Preparation observations below retain
+their original source identities and do not become new hosted measurements.
 
 ## History and inputs
 
@@ -42,9 +44,9 @@ packaged restart/expiry study, then always attempts owned cleanup. Only safe agg
 Markdown is printed to logs and the job summary; no artifact/cache upload, self-hosted or
 larger runner, provider credential, paid evaluation or application deployment is requested.
 
-The target proposal is `DmitryLyubaev/stock-reservation-service`, public, with the existing
-license-file state unchanged (no added license). Repository creation, protection settings,
-push and actual hosted execution await explicit approval under the portfolio rules.
+The approved public repository is `DmitryLyubaev/stock-reservation-service`, with the
+existing license-file state unchanged (no added license). Creation, protections, initial
+push and hosted verification completed under explicit approval; see the publication report.
 
 The existing deferred unsupported-method status Minor remains. Publication does not add
 commercial Java tenure, real orders, customer adoption, production scale or availability.

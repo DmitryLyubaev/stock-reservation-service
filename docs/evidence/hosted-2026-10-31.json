@@ -1,0 +1,64 @@
+{
+  "observed_date": "2026-10-31",
+  "timezone": "Australia/Brisbane",
+  "repository": "DmitryLyubaev/stock-reservation-service",
+  "run_id": 41133721919,
+  "run_url": "https://github.com/DmitryLyubaev/stock-reservation-service/actions/runs/41133721919",
+  "run_attempt": 1,
+  "source_sha": "305d38d67fb1f46f7d45896e56a9bc0905855f9e",
+  "source_tree": "b769229e264b3564fb0ab98bda9c183674b6443a",
+  "status": "pass",
+  "job_started_at": "2026-10-30T21:48:29Z",
+  "job_completed_at": "2026-10-30T21:55:08Z",
+  "job_url": "https://github.com/DmitryLyubaev/stock-reservation-service/actions/runs/41133721919/job/124330862575",
+  "runner_labels": [
+    "ubuntu-24.04"
+  ],
+  "java_tests": 29,
+  "python_tests": 11,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "acceptance": {
+    "A1": "pass",
+    "A2": "pass",
+    "A3": "pass",
+    "A4": "pass",
+    "A5": "pass",
+    "A6": "pass",
+    "A7": "pass",
+    "A8": "pass"
+  },
+  "scarce_stock": {
+    "submissions": 20,
+    "created": 10,
+    "expected_rejections": 10,
+    "peak_client_overlap": 20,
+    "observed_lock_waiters": 20
+  },
+  "real_clock": {
+    "created_at": "2026-10-30T21:50:04.930289Z",
+    "expires_at": "2026-10-30T21:55:04.930289Z",
+    "decided_at": "2026-10-30T21:55:05.118868Z",
+    "elapsed_database_seconds": 300.188579
+  },
+  "cleanup": {
+    "remaining_owned_containers": 0,
+    "retained_runner_volumes_at_cleanup": 1
+  },
+  "image_id": "sha256:8ddcdacd6be581e1c58757add10a667193e8b0dcbfe178ac720d3ffd4539878e",
+  "jar_sha256": "2b46dda163527474bdc339f66aa56064f4ca9ca96978893b54f37aae0b95c51d",
+  "environment": {
+    "architecture": "x86_64",
+    "docker": "28.0.4",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS",
+    "os": "Linux",
+    "python": "3.12.3"
+  },
+  "hosting_provenance": "GitHub run/job metadata; generated acceptance summary alone does not attest hosting",
+  "limitations": [
+    "One synthetic hosted sample and one twenty-request contention sample.",
+    "Explicit expiry; accelerated race tests use injected time separately.",
+    "No public application deployment, production SLA, adoption or commercial Java tenure."
+  ]
+}

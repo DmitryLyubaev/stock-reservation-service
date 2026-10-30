@@ -122,3 +122,10 @@ commit changes documentation only. All private results, credentials, caches and 
 scratch files were preserved under the main checkout's ignored `.local/` before removing
 the clean worktree and merged `codex/local-stock-reservation` branch. The existing deferred
 Minor is unchanged. No remote, push, hosted execution, cloud action or runtime restart.
+
+## Approved publication follow-up
+
+31 October 2026: the preceding sections describe the earlier local implementation and
+integration phases. Approved public publication and actual hosted A1-A8 verification
+are now recorded in the [dated report](publication-report-2026-10-31.md). Original private
+ancestry was excluded; implementation inputs and the deferred Minor are unchanged.

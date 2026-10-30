@@ -1,7 +1,7 @@
 # Project 20: Java/Spring stock-reservation service
 
 Date: 30 October 2026, Australia/Brisbane.
-Status: design and Native plan approved by Dmitry on 30 October 2026. All six local tasks, one fresh review and one correction pass are verified. Merged into local main and reverified on 31 October 2026; publication remains pending.
+Status: design and Native plan approved by Dmitry on 30 October 2026. All six local tasks, one fresh review and one correction pass are verified. Merged into local main and reverified on 31 October 2026; [approved publication and actual hosted verification](../../publication-report-2026-10-31.md) completed on 31 October.
 
 One fresh read-only builder check on 30 October returned "nothing important left".
 This checks design completeness only; no implementation or runtime validation occurred.

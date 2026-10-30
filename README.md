@@ -1,5 +1,7 @@
 # Stock Reservation Service
 
+[![Offline verification](https://github.com/DmitryLyubaev/stock-reservation-service/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DmitryLyubaev/stock-reservation-service/actions/workflows/ci.yml)
+
 A small synthetic Java/Spring backend demonstration: reserve one product and quantity,
 then confirm, cancel or explicitly expire the hold. PostgreSQL transactions protect stock
 and retain the original response for each request key.
@@ -14,8 +16,8 @@ and retain the original response for each request key.
 
 Publication history starts from a reviewed snapshot. Historical source IDs in the dated
 reports refer to preserved private verification history; the publication provenance records
-how the implementation bytes match those measurements. Hosted CI remains unproven until
-the proposed repository is approved, published and its workflow completes.
+how the implementation bytes match those measurements. [Hosted verification](docs/publication-report-2026-10-31.md) passed A1-A8, including
+29 Java and 11 Python checks, actual restart replay and genuine five-minute expiry.
 
 ## Run locally
 
@@ -135,7 +137,7 @@ are recorded in the measured report.
 
 The workflow definition uses standard hosted Ubuntu checks and safe job-log/summary evidence,
 with no artifact or cache uploads.
-Hosted execution and public publication remain unproven until separately approved and run.
+Actual publication and hosted results are recorded in the [dated report](docs/publication-report-2026-10-31.md).
 No application cloud deployment or paid model call is needed.
 
 ## Stack and limits

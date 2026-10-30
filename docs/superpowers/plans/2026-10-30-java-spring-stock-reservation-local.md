@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Execution:** Approved 30 October 2026, Native. All six tasks, one fresh review and bounded correction pass verified. Merged into local main and reverified on 31 October 2026; no publication or hosted run.
+**Execution:** Approved 30 October 2026, Native. All six tasks, one fresh review and bounded correction pass verified. Merged into local main and reverified on 31 October 2026; [approved publication and actual hosted verification](../../publication-report-2026-10-31.md) completed on 31 October. Implementation inputs are unchanged.
 
 **Goal:** Deliver the approved bounded synthetic stock-reservation API with actual PostgreSQL concurrency, duplicate-request, rollback, expiry and restart evidence.
 
