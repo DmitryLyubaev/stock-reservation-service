@@ -28,6 +28,18 @@ public class ApiErrors {
     return problem(HttpStatus.NOT_FOUND, "NOT_FOUND", request);
   }
 
+  @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
+  public ResponseEntity<ProblemBody> methodNotAllowed(
+      org.springframework.web.HttpRequestMethodNotSupportedException failure,
+      HttpServletRequest request) {
+    return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+        .headers(failure.getHeaders())
+        .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+        .body(
+            ProblemBody.of(
+                HttpStatus.METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED", request.getRequestURI()));
+  }
+
   @ExceptionHandler(org.springframework.web.HttpMediaTypeNotSupportedException.class)
   public ResponseEntity<ProblemBody> media(HttpServletRequest request) {
     return problem(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "UNSUPPORTED_MEDIA_TYPE", request);

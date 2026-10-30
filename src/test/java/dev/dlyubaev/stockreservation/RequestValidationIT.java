@@ -10,6 +10,35 @@ import org.junit.jupiter.api.Test;
 
 class RequestValidationIT extends HttpFixture {
   @Test
+  void unsupportedMethodsReturn405AndAllowWithoutDatabaseWrites() throws Exception {
+    for (var example :
+        Map.of("/api/reservations", "POST", "/api/inventory/DEMO-RED", "GET").entrySet()) {
+      var response =
+          request(
+              "PUT",
+              example.getKey(),
+              body("ORDER-1", "DEMO-RED", 1),
+              Map.of("Content-Type", "application/json", "Idempotency-Key", "UNSUPPORTED-METHOD"));
+      assertThat(response.statusCode()).as(example.getKey()).isEqualTo(405);
+      assertThat(
+              Arrays.stream(response.headers().firstValue("Allow").orElse("").split(","))
+                  .map(String::trim)
+                  .toList())
+          .contains(example.getValue())
+          .doesNotContain("PUT");
+      assertThat(response.headers().firstValue("Content-Type").orElse(""))
+          .startsWith("application/problem+json");
+      assertThat(json(response).get("status").asInt()).isEqualTo(405);
+      assertThat(json(response).get("code").asText()).isEqualTo("METHOD_NOT_ALLOWED");
+      assertThat(json(response).get("instance").asText()).isEqualTo(example.getKey());
+      assertThat(response.body()).doesNotContain("Exception", "stackTrace", "jdbc:");
+    }
+    assertThat(jdbc.queryForObject("select count(*) from request_results", Integer.class)).isZero();
+    assertThat(jdbc.queryForObject("select count(*) from reservations", Integer.class)).isZero();
+    assertInvariants();
+  }
+
+  @Test
   void encodedApiPathCannotBypassMutationBoundary() throws Exception {
     assertMutationBoundary("/%61pi/reservations");
   }
